@@ -3,66 +3,52 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <title>UMI - rankų darbo prekyvietė</title>
-<meta name="description" content="UMI yra rankų darbo daiktų prekyvietė. Kiekvieną prekę peržiūri žmogus, todėl čia nėra perpardavinėtojų.">
+<meta name="description" content="UMI - rankų darbo prekyvietė. Viskas čia padaryta žmogaus rankomis. Netrukus.">
+<link rel="icon" href="/umi-logo.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Figtree:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 <style>
   :root { color-scheme: light;
-    --ground:#F6F0F5; --surface:#fff; --ink:#1B1220; --muted:#6F6577;
+    --ground:#F6F0F5; --surface:#FFFFFF; --ink:#1B1220; --muted:#6F6577;
     --faint:#E7DCE7; --accent:#8C61A4; --pop:#2B0E3A; --pink:#FDE4F2; }
   * { box-sizing:border-box }
-  body { margin:0; background:var(--ground); color:var(--ink);
-    font:16px/1.65 -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif; }
-  main { max-width:760px; margin:0 auto; padding:64px 24px 96px }
-  .brand { font-weight:800; letter-spacing:6px; font-size:15px; color:var(--pop); margin-bottom:36px }
-  h1 { font-size:38px; line-height:1.15; margin:0 0 14px; letter-spacing:-.6px }
-  .lead { font-size:18px; color:var(--muted); margin:0 0 44px; max-width:560px }
-  h2 { font-size:20px; margin:44px 0 12px }
-  .cards { display:grid; gap:14px; grid-template-columns:repeat(auto-fit,minmax(220px,1fr)); margin:0 0 8px }
-  .card { background:var(--surface); border-radius:22px; padding:22px 20px; }
-  .card h3 { margin:0 0 6px; font-size:15px }
-  .card p { margin:0; font-size:14px; color:var(--muted); line-height:1.55 }
-  .note { background:var(--surface); border-radius:22px; padding:22px 20px; margin-top:14px }
-  .note p { margin:0; font-size:14px; color:var(--muted) }
-  footer { margin-top:64px; padding-top:26px; border-top:1px solid var(--faint);
-    font-size:14px; color:var(--muted) }
-  a { color:var(--accent) }
-  footer a { margin-right:18px }
+  html, body { height:100% }
+  body {
+    margin:0; background:var(--ground); color:var(--ink);
+    font-family:Figtree,-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif;
+    display:flex; flex-direction:column; min-height:100%;
+  }
+  main {
+    flex:1; display:flex; flex-direction:column; align-items:center; justify-content:center;
+    text-align:center; padding:56px 24px 40px;
+  }
+  .logo { width:168px; max-width:52vw; height:auto; margin-bottom:34px }
+  h1 { font-size:26px; font-weight:700; letter-spacing:-.3px; margin:0 0 10px; line-height:1.25 }
+  .lead { font-size:16px; color:var(--muted); margin:0; max-width:400px; line-height:1.6 }
+  .soon {
+    display:inline-block; margin-top:34px; padding:14px 30px; border-radius:999px;
+    background:var(--pop); color:var(--pink);
+    font-size:14.5px; font-weight:700; letter-spacing:.3px;
+  }
+  footer { padding:0 24px 44px; text-align:center; color:var(--muted); font-size:13px; line-height:1.9 }
+  footer a { color:var(--accent); text-decoration:none; margin:0 9px; white-space:nowrap }
+  footer a:hover { text-decoration:underline }
+  .company { margin-top:16px; font-size:12px; color:var(--muted); opacity:.85 }
+  @media (min-width:640px) { h1 { font-size:31px } .logo { width:196px } }
 </style>
 <main>
-  <div class="brand">UMI</div>
-  <h1>Rankų darbo prekyvietė.</h1>
-  <p class="lead">Vieta, kurioje viskas padaryta žmogaus rankomis. Kiekvieną prekę peržiūrime patys, todėl čia nėra perpardavinėtojų ir masinės gamybos.</p>
-
-  <h2>Kaip veikia</h2>
-  <div class="cards">
-    <div class="card">
-      <h3>Kūrėjai</h3>
-      <p>Kelia savo darbus nemokamai. Kiekviena prekė peržiūrima, kad prekyvietė liktų tikra.</p>
-    </div>
-    <div class="card">
-      <h3>Pirkėjai</h3>
-      <p>Užsako programėlėje. Pinigai laikomi tol, kol patvirtinama, kad daiktas gautas.</p>
-    </div>
-    <div class="card">
-      <h3>Pristatymas</h3>
-      <p>Į LP Express paštomatą arba iš rankų į rankas savo mieste.</p>
-    </div>
-  </div>
-
-  <h2>UMI Live</h2>
-  <div class="note">
-    <p>Mugėje kūrėjas įveda sumą, o pirkėjas nuskenuoja QR kodą savo telefonu ir sumoka kortele. Jokio aparato nereikia. Nusipirkęs pirkėjas išsaugo kūrėją ir gali užsisakyti dar kartą.</p>
-  </div>
-
-  <h2>Programėlė</h2>
-  <div class="note">
-    <p>UMI šiuo metu yra uždarojo testavimo stadijoje. Programėlė iOS, netrukus ir viešai.</p>
-  </div>
-
-  <footer>
-    <a href="/terms.html">Naudojimo taisyklės</a>
-    <a href="/privacy.html">Privatumo politika</a>
+  <img class="logo" src="/umi-logo.png" alt="UMI">
+  <h1>Rankų darbo prekyvietė</h1>
+  <p class="lead">Vieta, kurioje viskas padaryta žmogaus rankomis. Be perpardavinėtojų, be fabrikų.</p>
+  <span class="soon">Netrukus</span>
+</main>
+<footer>
+  <div>
+    <a href="/terms.html">Taisyklės</a>
+    <a href="/privacy.html">Privatumas</a>
     <a href="/support.html">Pagalba</a>
     <a href="mailto:info@skaistegulbe.com">info@skaistegulbe.com</a>
-    <p style="margin-top:18px">SGM Creative, Lietuva</p>
-  </footer>
-</main>
+  </div>
+  <div class="company">MB SGM CREATIVE, įmonės kodas 307583619, Lietuva</div>
+</footer>

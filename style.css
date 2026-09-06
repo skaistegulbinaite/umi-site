@@ -1,11 +1,19 @@
-/* One sheet for every UMI page. The three text pages used to carry their own
-   inline styles from the old green palette, so terms, privacy and support each
-   looked like a different website. */
+/* One sheet for every UMI page. The values come from the app's theme file
+   (mobile/src/theme.ts), copied by hand, value for value. A colour typed here
+   that is not in that file is a bug: the website has to look like the app. */
 
 :root {
   color-scheme: light;
-  --ground:#F6F0F5; --surface:#FFFFFF; --ink:#1B1220; --muted:#6F6577;
-  --faint:#E7DCE7; --accent:#8C61A4; --pop:#2B0E3A; --pink:#FDE4F2;
+  --ground:#F6F0F5; --surface:#FFFFFF; --sunken:#EADFE9;
+  --ink:#1B1220; --muted:#6F6577; --faint:#E7DCE7;
+  --accent:#8C61A4; --accent-glass:#C9B4D3; --accent-fg:#2B0E3A; --accent-soft:#F4E5F1;
+  --pop:#2B0E3A; --on-deep:#FDE4F2;
+  --eco:#6B4E9E; --eco-soft:#EDE4F7;
+  --danger:#A8497F; --danger-soft:#F7E4EF; --success:#2E7D4F;
+  --glass:rgba(246,240,245,0.72); --glass-edge:rgba(255,255,255,0.8);
+  --r-s:14px; --r-m:20px; --r-l:26px; --r-xl:32px; --pill:999px;
+  --shadow-card:0 10px 22px rgba(43,14,58,0.13);
+  --shadow-float:0 14px 30px rgba(26,7,37,0.26);
 }
 * { box-sizing:border-box }
 html, body { height:100% }
@@ -15,39 +23,83 @@ body {
   font-size:16px; line-height:1.7;
   display:flex; flex-direction:column; min-height:100%;
 }
+a { color:var(--accent) }
+strong { font-weight:600 }
 
-/* header ------------------------------------------------------------------ */
-.top { padding:34px 24px 0; text-align:center }
-.top img { width:96px; height:auto }
+/* the app's menu, on top instead of at the bottom ------------------------- */
+.bar {
+  position:sticky; top:0; z-index:5;
+  background:var(--glass); backdrop-filter:blur(18px); -webkit-backdrop-filter:blur(18px);
+}
+.bar .in {
+  max-width:1080px; margin:0 auto; padding:12px 20px;
+  display:flex; align-items:center; gap:18px;
+}
+.bar .logo img { width:44px; height:auto; display:block }
+.menu { display:flex; gap:4px; margin-left:auto; flex-wrap:wrap; justify-content:flex-end }
+.menu a {
+  text-decoration:none; color:var(--ink); font-weight:500; font-size:15px;
+  padding:9px 15px; border-radius:var(--pill);
+}
+.menu a:hover { background:var(--accent-soft) }
+.menu a.on { background:var(--accent-glass); color:var(--accent-fg); font-weight:700 }
+.menu a.plus {
+  background:var(--accent-glass); color:var(--accent-fg); font-weight:700;
+}
 
 /* content ----------------------------------------------------------------- */
 main { flex:1; width:100%; max-width:720px; margin:0 auto; padding:34px 24px 72px }
-h1 { font-size:28px; font-weight:700; letter-spacing:-.4px; margin:0 0 6px; line-height:1.25 }
+h1 { font-size:28px; font-weight:800; letter-spacing:-.4px; margin:0 0 6px; line-height:1.25; text-wrap:balance }
 h2 { font-size:18px; font-weight:700; margin:38px 0 12px }
 p { margin:0 0 12px }
 ul { padding-left:20px; margin:0 0 12px }
 li { margin-bottom:6px }
-strong { font-weight:600 }
-a { color:var(--accent) }
 .date { color:var(--muted); font-size:14px; margin:0 0 24px }
-.intro p { color:var(--ink) }
-hr { border:0; border-top:1px solid var(--faint); margin:56px 0 }
+hr { border:0; height:1px; background:var(--faint); margin:56px 0 }
 .en { color:var(--muted) }
 .en h1, .en h2, .en strong { color:var(--ink) }
 .mail {
-  display:inline-block; margin:6px 0 8px; padding:12px 22px; border-radius:999px;
-  background:var(--pop); color:var(--pink); font-weight:700; font-size:14px; text-decoration:none;
+  display:inline-block; margin:6px 0 8px; padding:12px 22px; border-radius:var(--pill);
+  background:var(--pop); color:var(--on-deep); font-weight:700; font-size:14px; text-decoration:none;
 }
-.box { background:var(--surface); border-radius:20px; padding:18px 20px; margin:18px 0 }
+.box { background:var(--surface); border-radius:var(--r-m); padding:18px 20px; margin:18px 0 }
 .box p { margin:0; font-size:14.5px; color:var(--muted) }
 
+/* buttons: the + button's finish - flat, light, opaque purple, dark label.
+   `pop` is the logo purple, saved for the action that should stand out. ---- */
+.btn {
+  display:inline-block; font:inherit; font-weight:700; font-size:15px; border:0; cursor:pointer;
+  background:var(--accent-glass); color:var(--accent-fg); border-radius:var(--pill);
+  padding:14px 24px; text-decoration:none; line-height:1.2; text-align:center;
+}
+.btn:hover { filter:brightness(0.97) }
+.btn:disabled { opacity:.55; cursor:default }
+.btn.pop { background:var(--pop); color:var(--on-deep) }
+.btn.ghost { background:var(--accent-soft); color:var(--accent-fg) }
+.btn.wide { width:100% }
+
 /* home -------------------------------------------------------------------- */
-.home { flex:1; display:flex; flex-direction:column; align-items:center; justify-content:center;
-  text-align:center; padding:56px 24px 40px; max-width:none }
-.home .logo { width:168px; max-width:52vw; height:auto; margin-bottom:34px }
-.home h1 { font-size:26px; margin:0 }
-.soon { display:inline-block; margin-top:30px; padding:14px 30px; border-radius:999px;
-  background:var(--pop); color:var(--pink); font-size:14.5px; font-weight:700; letter-spacing:.3px }
+.home { max-width:1080px; padding:56px 24px 60px }
+.hero { text-align:center; padding:10px 0 34px }
+.hero .logo { width:150px; max-width:46vw; height:auto; margin-bottom:26px }
+.hero h1 { font-size:30px; margin:0 0 8px }
+.hero p { color:var(--muted); font-size:17px; margin:0 auto 26px; max-width:520px }
+.hero .row { justify-content:center }
+.tiers { display:grid; gap:16px; grid-template-columns:1fr; margin-top:12px }
+.tier {
+  background:var(--surface); border-radius:var(--r-l); padding:22px 22px 24px;
+  box-shadow:var(--shadow-card); display:flex; flex-direction:column; gap:6px;
+}
+.tier .chip {
+  align-self:flex-start; font-size:12px; font-weight:700; letter-spacing:.4px;
+  padding:5px 11px; border-radius:var(--pill); background:var(--accent-glass); color:var(--accent-fg);
+}
+.tier .chip.free { background:var(--sunken); color:var(--muted) }
+.tier .chip.bus { background:var(--pop); color:var(--on-deep) }
+.tier h2 { margin:8px 0 0; font-size:20px }
+.tier .price { font-size:26px; font-weight:800; margin:2px 0 4px }
+.tier .price small { font-size:14px; font-weight:500; color:var(--muted) }
+.tier p { color:var(--muted); font-size:15px; margin:0 0 10px; flex:1 }
 
 /* footer ------------------------------------------------------------------ */
 footer { padding:0 24px 44px; text-align:center; color:var(--muted); font-size:13px; line-height:1.9 }
@@ -57,28 +109,34 @@ footer a:hover { text-decoration:underline }
 
 @media (min-width:640px) {
   h1 { font-size:31px }
-  .home h1 { font-size:31px }
-  .home .logo { width:196px }
+  .hero h1 { font-size:38px }
+  .hero .logo { width:180px }
+  .tiers { grid-template-columns:repeat(3,1fr) }
+}
+@media (max-width:560px) {
+  .menu a { padding:8px 11px; font-size:14px }
 }
 
 /* UMI PRO / VERSLAS ------------------------------------------------------- */
 .lead { font-size:17px; color:var(--muted); margin-bottom:26px }
 .plan {
-  background:var(--surface); border:1px solid var(--faint); border-radius:18px;
-  padding:22px 22px 24px; margin:0 0 18px;
+  background:var(--surface); border-radius:var(--r-l); box-shadow:var(--shadow-card);
+  padding:22px 22px 24px; margin:0 0 18px; scroll-margin-top:90px;
 }
+.plan.lit { outline:3px solid var(--accent-glass) }
 .plan h2 { margin-top:0 }
+.plan .tag { color:var(--muted); font-size:14px; font-weight:500; margin:-6px 0 10px }
 .row { display:flex; gap:10px; flex-wrap:wrap; align-items:center; margin:14px 0 }
-.btn {
-  font:inherit; font-weight:600; border:0; cursor:pointer;
-  background:var(--accent); color:#fff; border-radius:999px; padding:13px 22px;
-}
-.btn:disabled { opacity:.55; cursor:default }
-.btn.ghost { background:var(--pink); color:var(--pop) }
+.card { background:var(--surface); border-radius:var(--r-l); box-shadow:var(--shadow-card); padding:22px; margin:0 0 18px }
+.card h2 { margin-top:0 }
 input[type=email], #company-fields input {
-  font:inherit; border:1px solid var(--faint); border-radius:12px;
-  padding:12px 14px; background:var(--surface); color:var(--ink);
+  font:inherit; border:0; border-radius:var(--r-s);
+  padding:13px 15px; background:var(--sunken); color:var(--ink);
   min-width:220px; flex:1; margin-bottom:10px;
 }
+input::placeholder { color:var(--muted) }
 .pick { display:flex; align-items:center; gap:8px; font-weight:500 }
+.pick input { accent-color:var(--accent) }
 .note { color:var(--muted); font-size:14px }
+.warn { background:var(--danger-soft); color:var(--danger); border-radius:var(--r-s); padding:12px 14px; font-size:14px }
+.ok { color:var(--success) }

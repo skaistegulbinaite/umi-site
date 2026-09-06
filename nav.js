@@ -1,11 +1,11 @@
 // The app's five tabs, in the app's words and order, as a top bar. Every page
 // includes this so the menu is written once. APP is where the app lives on the
 // web; change it here when app.umimarket.app is live.
-const APP = 'https://skaistegulbinaite.github.io/marketplace-preview';
+const APP = 'https://app.umimarket.app';
 const items = [
   ['Pradžia', APP + '/'],
   ['Paieška', APP + '/search'],
-  ['Parduoti', APP + '/sell', 'plus'],
+  ['Parduoti', APP + '/sell', 'sell'],
   ['Žinutės', APP + '/inbox'],
   ['Profilis', APP + '/profile'],
 ];

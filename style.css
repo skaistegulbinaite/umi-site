@@ -43,8 +43,8 @@ strong { font-weight:600 }
 }
 .menu a:hover { background:var(--accent-soft) }
 .menu a.on { background:var(--accent-glass); color:var(--accent-fg); font-weight:700 }
-.menu a.plus {
-  background:var(--accent-glass); color:var(--accent-fg); font-weight:700;
+.menu a.sell {
+  background:var(--pop); color:var(--on-deep); font-weight:700;
 }
 
 /* content ----------------------------------------------------------------- */

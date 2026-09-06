@@ -60,3 +60,25 @@ footer a:hover { text-decoration:underline }
   .home h1 { font-size:31px }
   .home .logo { width:196px }
 }
+
+/* UMI PRO / VERSLAS ------------------------------------------------------- */
+.lead { font-size:17px; color:var(--muted); margin-bottom:26px }
+.plan {
+  background:var(--surface); border:1px solid var(--faint); border-radius:18px;
+  padding:22px 22px 24px; margin:0 0 18px;
+}
+.plan h2 { margin-top:0 }
+.row { display:flex; gap:10px; flex-wrap:wrap; align-items:center; margin:14px 0 }
+.btn {
+  font:inherit; font-weight:600; border:0; cursor:pointer;
+  background:var(--accent); color:#fff; border-radius:999px; padding:13px 22px;
+}
+.btn:disabled { opacity:.55; cursor:default }
+.btn.ghost { background:var(--pink); color:var(--pop) }
+input[type=email], #company-fields input {
+  font:inherit; border:1px solid var(--faint); border-radius:12px;
+  padding:12px 14px; background:var(--surface); color:var(--ink);
+  min-width:220px; flex:1; margin-bottom:10px;
+}
+.pick { display:flex; align-items:center; gap:8px; font-weight:500 }
+.note { color:var(--muted); font-size:14px }

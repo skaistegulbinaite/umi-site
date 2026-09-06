@@ -1,0 +1,163 @@
+<!doctype html>
+<html lang="lt">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32.png">
+<link rel="icon" type="image/png" sizes="512x512" href="/favicon-512.png">
+<link rel="apple-touch-icon" href="/apple-touch-icon.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Figtree:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="/style.css">
+<title>UMI PRO ir UMI VERSLAS</title>
+<meta name="description" content="UMI PRO ir UMI VERSLAS - prenumeratos kūrėjoms ir kūrėjams.">
+
+<header class="top"><a href="/"><img src="/umi-logo.png" alt="UMI"></a></header>
+
+<main>
+  <h1>UMI PRO ir UMI VERSLAS</h1>
+  <p class="lead">Prekiauti UMI visada nemokama. Prenumerata skirta tiems, kam UMI yra
+  ne šalutinis dalykas, o darbas.</p>
+
+  <div id="signed-out">
+    <h2>Pirmiausia prisijunkite</h2>
+    <p>Įrašykite el. paštą, kurį naudojate UMI programėlėje. Atsiųsime nuorodą -
+    paspaudus ją prenumerata prisiriš prie jūsų paskyros.</p>
+    <form id="login-form" class="row">
+      <input id="email" type="email" required placeholder="jusu@pastas.lt" autocomplete="email">
+      <button class="btn" type="submit">Siųsti nuorodą</button>
+    </form>
+    <p id="login-msg" class="note" hidden></p>
+  </div>
+
+  <div id="signed-in" hidden>
+    <p class="note" id="who"></p>
+
+    <section class="plan">
+      <h2>UMI PRO</h2>
+      <p>Daugiau informacijos, patogesnė prekyba.</p>
+      <ul>
+        <li>PRO ženklelis prie jūsų vardo</li>
+        <li>Jūsų prekės rodomos aukščiau</li>
+        <li>UMI Live - mokėjimai kortele mugėje, be terminalo</li>
+        <li>Nuolaidų kodai jūsų pirkėjams</li>
+        <li>Tikri duomenys: kas žiūrėta, kas neparduota</li>
+        <li>Galite paslėpti „perskaityta“ žinutėse</li>
+        <li>Matote, kas žiūrėjo jūsų profilį</li>
+        <li>„Paskutinis“ ant paskutinio egzemplioriaus</li>
+        <li>Užimtumo režimas - ilgesnis pagaminimo laikas</li>
+        <li>Atsiėmimas iš jūsų studijos</li>
+      </ul>
+      <div class="row">
+        <button class="btn" data-plan="pro-monthly">10 € / mėn.</button>
+        <button class="btn ghost" data-plan="pro-yearly">84 € / metams</button>
+      </div>
+    </section>
+
+    <section class="plan">
+      <h2>UMI VERSLAS</h2>
+      <p>Viskas iš PRO ir prekyba iš kelių telefonų vienu metu.</p>
+      <ul>
+        <li>Viskas, kas yra UMI PRO</li>
+        <li>VERSLAS ženklelis prie jūsų vardo</li>
+        <li>Prekyba iš kelių telefonų vienu metu</li>
+        <li>Matote, kuris žmogus ką pardavė</li>
+        <li>Sąskaitos faktūros su įmonės rekvizitais</li>
+      </ul>
+      <div class="row">
+        <button class="btn" data-plan="business-monthly">29 € / mėn.</button>
+      </div>
+    </section>
+
+    <h2>Kas jūs esate?</h2>
+    <p>Tai keičia tik sąskaitą faktūrą, ne kainą. Sąskaitą gauna visi - daug kūrėjų
+    dirba pagal individualią veiklą, ir jiems jos reikia lygiai taip pat.</p>
+    <div class="row">
+      <label class="pick"><input type="radio" name="kind" value="person" checked> Fizinis asmuo</label>
+      <label class="pick"><input type="radio" name="kind" value="company"> Įmonė</label>
+    </div>
+    <div id="company-fields" hidden>
+      <input id="company-name" placeholder="Įmonės pavadinimas">
+      <input id="company-code" placeholder="Įmonės kodas">
+      <input id="vat-code" placeholder="PVM kodas (nebūtina)">
+    </div>
+
+    <p id="msg" class="note" hidden></p>
+    <p class="note">Atšaukti galite bet kada. Jokio 12 mėnesių įsipareigojimo.</p>
+  </div>
+</main>
+
+<footer>
+  <div>
+    <a href="/">Pradžia</a>
+    <a href="/terms.html">Taisyklės</a>
+    <a href="/privacy.html">Privatumas</a>
+    <a href="/support.html">Pagalba</a>
+  </div>
+</footer>
+
+<script type="module">
+// Buying PRO on the website rather than in the app is the whole point: Apple takes
+// 15-30% of a subscription sold inside an app and nothing of one sold here.
+import { createClient } from 'https://esm.sh/@supabase/supabase-js@2';
+
+const SUPABASE_URL = 'https://qtzsgjgryfnaayrnaadl.supabase.co';
+const SUPABASE_ANON = 'sb_publishable_HP_gRv0fRnEUAQSpSsRSaA_-XQAJUm3';
+const sb = createClient(SUPABASE_URL, SUPABASE_ANON);
+
+const $ = (id) => document.getElementById(id);
+const show = (el, on) => { el.hidden = !on; };
+
+async function render() {
+  const { data: { session } } = await sb.auth.getSession();
+  show($('signed-out'), !session);
+  show($('signed-in'), !!session);
+  if (session) $('who').textContent = session.user.email;
+}
+
+// Magic link: the website has no password of its own, and the subscription has to
+// land on the same account the app uses.
+$('login-form').addEventListener('submit', async (e) => {
+  e.preventDefault();
+  const email = $('email').value.trim();
+  const { error } = await sb.auth.signInWithOtp({
+    email, options: { emailRedirectTo: window.location.href },
+  });
+  const msg = $('login-msg');
+  msg.textContent = error ? error.message : 'Patikrinkite paštą - nuoroda išsiųsta.';
+  show(msg, true);
+});
+
+document.querySelectorAll('input[name="kind"]').forEach((r) => {
+  r.addEventListener('change', () => {
+    show($('company-fields'), document.querySelector('input[name="kind"]:checked').value === 'company');
+  });
+});
+
+document.querySelectorAll('button[data-plan]').forEach((b) => {
+  b.addEventListener('click', async () => {
+    const msg = $('msg');
+    b.disabled = true;
+    try {
+      const { data, error } = await sb.functions.invoke('subscribe', {
+        body: {
+          plan: b.dataset.plan,
+          sellerKind: document.querySelector('input[name="kind"]:checked').value,
+          companyName: $('company-name').value.trim() || null,
+          companyCode: $('company-code').value.trim() || null,
+          vatCode: $('vat-code').value.trim() || null,
+        },
+      });
+      if (error) throw error;
+      window.location.href = data.url;
+    } catch (err) {
+      msg.textContent = String(err.message || err);
+      show(msg, true);
+      b.disabled = false;
+    }
+  });
+});
+
+sb.auth.onAuthStateChange(render);
+render();
+</script>

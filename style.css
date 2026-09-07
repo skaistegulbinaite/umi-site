@@ -26,6 +26,13 @@ body {
 a { color:var(--accent) }
 strong { font-weight:600 }
 
+/* header ------------------------------------------------------------------ */
+/* Every page except the home page carries the mark at the top. Its size rule
+   lives here and nowhere else: the markup was put back on these pages once
+   while this block was missing, and the logo drew at full resolution. */
+.top { padding:30px 24px 0; text-align:center }
+.top img { width:96px; height:auto; display:inline-block }
+
 /* content ------------------------------------------------------------- */
 main { flex:1; width:100%; max-width:720px; margin:0 auto; padding:34px 24px 72px }
 h1 { font-size:28px; font-weight:800; letter-spacing:-.4px; margin:0 0 6px; line-height:1.25; text-wrap:balance }

@@ -41,6 +41,8 @@ p { margin:0 0 12px }
 ul { padding-left:20px; margin:0 0 12px }
 li { margin-bottom:6px }
 .date { color:var(--muted); font-size:14px; margin:0 0 24px }
+/* The opening paragraph of the rules reads as body text, not as a note. */
+.intro p { color:var(--ink) }
 hr { border:0; height:1px; background:var(--faint); margin:56px 0 }
 .en { color:var(--muted) }
 .en h1, .en h2, .en strong { color:var(--ink) }

@@ -8,7 +8,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Figtree:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="/style.css?v=145d8005">
+<link rel="stylesheet" href="/style.css?v=5d0b8a00">
 <title>UMI PRO ir UMI VERSLAS</title>
 <!-- Not for finding. The plans are parked for the beta and this page exists
      so she can show what they will be, not so a stranger can subscribe. -->
@@ -37,7 +37,12 @@
         <li>Parduotų prekių ir likučio informacija</li>
         <li>Mėnesio užsakymų ir uždarbio apžvalga</li>
       </ul>
-      <div class="foot"><p class="note">Nieko daugiau nereikia - visa tai jau turite.</p></div>
+      <div class="foot">
+        <span class="btn wide have">Jau turite</span>
+        <!-- keeps the free card's buttons at the same height as the other two -->
+        <button class="btn ghost wide" style="visibility:hidden" aria-hidden="true" tabindex="-1">-</button>
+        <p class="note">Nieko daugiau nereikia - visa tai jau turite.</p>
+      </div>
     </section>
 
     <section class="plan best" id="pro">
@@ -47,7 +52,7 @@
       <p class="per">per mėnesį</p>
       <p class="what"><strong>Auginkite savo parduotuvę.</strong> Daugiau įrankių pardavimams
       skatinti, atsargoms valdyti ir geriau suprasti, kas veikia jūsų parduotuvėje.</p>
-      <ul>
+      <ul class="clip">
         <li>Nuolaidų kodai - procentinė ar fiksuota nuolaida, nemokamas siuntimas ir galiojimo terminai</li>
         <li>Akcijos - specialūs pasiūlymai, nuolaidos perkant kelias prekes ir nemokamas siuntimas nuo nustatytos sumos</li>
         <li>Išsamesnė statistika - peržiūros, sekėjai, pardavimai ir uždarbis laikui bėgant</li>
@@ -58,6 +63,7 @@
         <li>UMI LIVE - priimkite mokėjimus kortele mugėse ir renginiuose be mokėjimo terminalo</li>
         <li>Verslo rekvizitai ir sąskaitos faktūros</li>
       </ul>
+      <button class="more" type="button">Rodyti visas galimybes</button>
       <div class="foot">
         <button class="btn wide" data-plan="pro-monthly">Rinktis</button>
         <button class="btn ghost wide" data-plan="pro-yearly">Rinkitės metinį planą - 84 €</button>
@@ -71,7 +77,7 @@
       <p class="per">per mėnesį</p>
       <p class="what"><strong>Valdykite savo prekės ženklą.</strong> Pažangesni įrankiai
       pardavimams, pirkėjų analizei ir komandai - kai UMI tampa jūsų verslo dalimi.</p>
-      <ul>
+      <ul class="clip">
         <li>Viskas, kas įeina į UMI PRO</li>
         <li>Keli darbuotojų prisijungimai - suteikite skirtingas prieigos teises savininkui, administratoriui ar pardavėjui</li>
         <li>Veiksmų žurnalas - matykite, kas ir kada atliko veiksmus jūsų parduotuvėje</li>
@@ -81,8 +87,11 @@
         <li>Išsamesnė prekių analizė - palyginkite skirtingas prekes ir stebėkite jų rezultatus laikui bėgant</li>
         <li>Išplėstinė parduotuvės statistika - daugiau duomenų ir ilgesnė istorija jūsų sprendimams priimti</li>
       </ul>
+      <button class="more" type="button">Rodyti visas galimybes</button>
       <div class="foot">
         <button class="btn wide" data-plan="business-monthly">Rinktis</button>
+        <button class="btn ghost wide" data-plan="business-yearly">Rinkitės metinį planą - 290 €</button>
+        <p class="note">290 € per metus vietoje 348 €</p>
       </div>
     </section>
 
@@ -103,6 +112,18 @@
   nekainuoja, ir tai nesikeis.</p>
 
 </main>
+
+<script>
+  // Four features are shown; the rest open on request. Without this the three
+  // cards are three different heights and the prices no longer line up.
+  document.querySelectorAll('.plan .more').forEach((b) => {
+    b.addEventListener('click', () => {
+      const list = b.previousElementSibling;
+      const open = list.classList.toggle('open');
+      b.textContent = open ? 'Rodyti mažiau' : 'Rodyti visas galimybes';
+    });
+  });
+</script>
 
 <footer>
   <div>

@@ -128,9 +128,14 @@ const sb = createClient(
 const $ = (id) => document.getElementById(id);
 let plan = null;
 
+// The design chat writes these buttons and may name them 'pro-monthly' or
+// 'pro-yearly'. Which billing period she would pick is a question for the day
+// they go on sale; today the only thing being recorded is which plan.
+const planOf = (v) => (String(v).startsWith('business') ? 'business' : 'pro');
+
 document.querySelectorAll('button[data-plan]').forEach((b) => {
   b.addEventListener('click', () => {
-    plan = b.dataset.plan;
+    plan = planOf(b.dataset.plan);
     $('ask-title').textContent =
       plan === 'pro' ? 'Pranešime, kai atsiras UMI PRO' : 'Pranešime, kai atsiras UMI VERSLAS';
     $('ask').hidden = false;

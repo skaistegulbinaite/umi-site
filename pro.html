@@ -8,7 +8,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Figtree:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="/style.css?v=6d845390">
+<link rel="stylesheet" href="/style.css?v=145d8005">
 <title>UMI PRO ir UMI VERSLAS</title>
 <!-- Not for finding. The plans are parked for the beta and this page exists
      so she can show what they will be, not so a stranger can subscribe. -->
@@ -18,28 +18,39 @@
 
 <header class="top"><a href="/"><img src="/umi-logo.png" alt="UMI"></a></header>
 
-<main>
+<main class="wide">
   <h1>UMI PRO ir UMI VERSLAS</h1>
   <p class="lead">Prekiauti UMI visada nemokama. Peržiūros, sekėjai ir patikę darbai -
   taip pat. Prenumerata skirta ne tam, kad matytumėte skaičius, o kad su jais galėtumėte
   ką nors padaryti.</p>
 
-  <section class="plan">
-      <h2>Nemokamas</h2><p class="tag">0 € - visada</p>
-      <p><strong>Parduokite savo darbus.</strong> Viskas, ko reikia įkelti, parduoti ir
-      tvarkyti savo rankų darbo prekes.</p>
+  <!-- Three side by side, her call 2026-09-06, the way a pricing page reads:
+       compare across, not scroll down. UMI's own surfaces, not a borrowed dark
+       theme. PRO carries the badge because it is the one most people want. -->
+  <div class="plans">
+
+    <section class="plan">
+      <h2>Nemokamas</h2>
+      <p class="price">0 €</p>
+      <p class="per">visada</p>
+      <p class="what"><strong>Parduokite savo darbus.</strong> Viskas, ko reikia įkelti,
+      parduoti ir tvarkyti savo rankų darbo prekes.</p>
       <ul>
         <li>Profilio peržiūros, sekėjai, nauji sekėjai</li>
         <li>Kiekvienos prekės peržiūros ir patikę</li>
         <li>Kiek kartų parduota, kiek liko</li>
         <li>Šio mėnesio užsakymai ir uždarbis</li>
       </ul>
+      <div class="foot"><p class="note">Nieko nereikia daryti - jau turite.</p></div>
     </section>
 
-  <section class="plan">
-      <h2 id="pro">UMI PRO</h2><p class="tag">9,99 € / mėn.</p>
-      <p><strong>Auginkite savo parduotuvę.</strong> Įrankiai, padedantys reklamuoti
-      prekes, suprasti parduotuvę ir priimti geresnius sprendimus.</p>
+    <section class="plan best" id="pro">
+      <span class="badge">Populiariausias</span>
+      <h2>UMI PRO</h2>
+      <p class="price">9,99 €</p>
+      <p class="per">per mėnesį</p>
+      <p class="what"><strong>Auginkite savo parduotuvę.</strong> Įrankiai, padedantys
+      reklamuoti prekes, suprasti parduotuvę ir priimti geresnius sprendimus.</p>
       <ul>
         <li>Nuolaidų kodai - procentai, eurai, nemokamas siuntimas, galiojimas</li>
         <li>Akcijos - 2 už 10 %, nuo 50 € - 5 € nuolaida, nemokamas siuntimas nuo 60 €</li>
@@ -51,16 +62,19 @@
         <li>UMI Live - mokėjimai kortele mugėje, be terminalo</li>
         <li>Verslo rekvizitai ir sąskaitos faktūros</li>
       </ul>
-      <div class="row">
-        <button class="btn" data-plan="pro-monthly">Rinktis - 9,99 € / mėn.</button>
-        <button class="btn ghost" data-plan="pro-yearly">Rinktis - 84 € / metams</button>
+      <div class="foot">
+        <button class="btn wide" data-plan="pro-monthly">Rinktis</button>
+        <button class="btn ghost wide" data-plan="pro-yearly">Metams - 84 €</button>
+        <p class="note">84 € per metus vietoj 119,88 €.</p>
       </div>
     </section>
 
-  <section class="plan">
-      <h2 id="business">UMI VERSLAS</h2><p class="tag">29 € / mėn.</p>
-      <p><strong>Valdykite savo prekės ženklą.</strong> Gilesni duomenys, informacija apie
-      pirkėjus ir komandos įrankiai tiems, kas kuria tikrą verslą.</p>
+    <section class="plan" id="business">
+      <h2>UMI VERSLAS</h2>
+      <p class="price">29 €</p>
+      <p class="per">per mėnesį</p>
+      <p class="what"><strong>Valdykite savo prekės ženklą.</strong> Gilesni duomenys,
+      informacija apie pirkėjus ir komandos įrankiai tiems, kas kuria tikrą verslą.</p>
       <ul>
         <li>Viskas, kas yra UMI PRO</li>
         <li>Keli darbuotojų prisijungimai - savininkas, administratorius, pardavėjas</li>
@@ -70,10 +84,12 @@
         <li>Pirkėjų analizė: nauji, grįžtantys, vidutinis krepšelis</li>
         <li>Gilesnė prekių analizė ir istoriniai duomenys</li>
       </ul>
-      <div class="row">
-        <button class="btn" data-plan="business-monthly">Rinktis - 29 € / mėn.</button>
+      <div class="foot">
+        <button class="btn wide" data-plan="business-monthly">Rinktis</button>
       </div>
     </section>
+
+  </div>
 
   <div id="signed-out" class="card" hidden>
     <h2>Pirmiausia prisijunkite</h2>

@@ -86,13 +86,37 @@ footer a:hover { text-decoration:underline }
 }
 
 /* UMI PRO / VERSLAS ------------------------------------------------------- */
+/* Three plans side by side so they can be compared across rather than scrolled
+   through. One column on a phone, where side by side would mean three unreadable
+   slivers. The page itself is wider than the reading pages: 720px fits one column
+   of prose, not three of them. */
 .lead { font-size:17px; color:var(--muted); margin-bottom:26px }
+main.wide { max-width:1120px }
+.plans { display:grid; gap:16px; align-items:stretch; margin-bottom:28px }
+@media (min-width:900px) { .plans { grid-template-columns:repeat(3,1fr) } }
 .plan {
+  position:relative; display:flex; flex-direction:column;
   background:var(--surface); border-radius:var(--r-l); box-shadow:var(--shadow-card);
-  padding:22px 22px 24px; margin:0 0 18px; scroll-margin-top:90px;
+  padding:26px 22px 22px; margin:0; scroll-margin-top:90px;
 }
-.plan.lit { outline:3px solid var(--accent-glass) }
-.plan h2 { margin-top:0 }
+/* the one most people want, marked the way the app marks a chosen chip */
+.plan.best { background:var(--accent-soft); outline:2px solid var(--accent) }
+.badge {
+  position:absolute; top:-11px; left:50%; transform:translateX(-50%);
+  background:var(--accent-glass); color:var(--accent-fg);
+  border-radius:var(--pill); padding:5px 14px; font-size:12px; font-weight:700;
+  white-space:nowrap;
+}
+.plan h2 { margin:0; font-size:17px; letter-spacing:.2px }
+.plan .price { font-size:34px; font-weight:800; color:var(--pop); letter-spacing:-1px; margin:10px 0 0 }
+.plan .per { color:var(--muted); font-size:13.5px; margin:0 0 14px }
+.plan .what { font-size:14.5px; margin-bottom:12px }
+.plan ul { padding-left:0; list-style:none; margin:0 0 18px }
+.plan li { position:relative; padding-left:22px; font-size:14px; margin-bottom:8px; color:var(--muted) }
+.plan li::before { content:"✓"; position:absolute; left:0; color:var(--accent); font-weight:700 }
+/* the buttons line up across the three cards however long the lists are */
+.foot { margin-top:auto; display:grid; gap:8px }
+.foot .note { margin:2px 0 0; font-size:12.5px; text-align:center }
 .plan .tag { color:var(--muted); font-size:14px; font-weight:500; margin:-6px 0 10px }
 .row { display:flex; gap:10px; flex-wrap:wrap; align-items:center; margin:14px 0 }
 .card { background:var(--surface); border-radius:var(--r-l); box-shadow:var(--shadow-card); padding:22px; margin:0 0 18px }

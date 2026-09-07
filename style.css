@@ -138,10 +138,9 @@ main.wide { max-width:1120px }
 .more:hover { text-decoration:underline }
 /* the free plan has nothing to buy, but it keeps a button-shaped line so the
    three cards' feet match */
-.have {
-  background:var(--surface); color:var(--muted); cursor:default;
-  border:1px solid var(--faint); box-shadow:none;
-}
+/* Her call: the free plan's line looks exactly like Rinktis - it just does not
+   do anything, because there is nothing to buy. Only the cursor gives it away. */
+.have { cursor:default }
 /* the buttons line up across the three cards however long the lists are */
 .foot { margin-top:auto; display:grid; gap:8px }
 .foot .note { margin:2px 0 0; font-size:12.5px; text-align:center }

@@ -87,34 +87,20 @@
 
   </div>
 
-  <div id="signed-out" class="card" hidden>
-    <h2>Pirmiausia prisijunkite</h2>
-    <p>Įrašykite el. paštą, kurį naudojate UMI programėlėje. Atsiųsime nuorodą -
-    paspaudus ją prenumerata prisiriš prie jūsų paskyros.</p>
-    <form id="login-form" class="row">
+  <div id="ask" class="card" hidden>
+    <h2 id="ask-title">Pranešime, kai atsiras</h2>
+    <p>Šie planai dar nepardavinėjami. Palikite el. paštą - parašysime, kai bus
+    galima užsisakyti, ir nieko kito nesiųsime.</p>
+    <form id="ask-form" class="row">
       <input id="email" type="email" required placeholder="jusu@pastas.lt" autocomplete="email">
-      <button class="btn" type="submit">Siųsti nuorodą</button>
+      <button class="btn" type="submit">Pranešti man</button>
     </form>
-    <p id="login-msg" class="note" hidden></p>
+    <p id="msg" class="note" hidden></p>
   </div>
 
-  <div id="signed-in" class="card" hidden>
-    <p class="note" id="who"></p>
-    <h2>Kas jūs esate?</h2>
-    <p>Tai keičia tik sąskaitą faktūrą, ne kainą. Sąskaitą gauna visi - daug kūrėjų
-    dirba pagal individualią veiklą, ir jiems jos reikia lygiai taip pat.</p>
-    <div class="row">
-      <label class="pick"><input type="radio" name="kind" value="person" checked> Fizinis asmuo</label>
-      <label class="pick"><input type="radio" name="kind" value="company"> Įmonė</label>
-    </div>
-    <div id="company-fields" hidden>
-      <input id="company-name" placeholder="Įmonės pavadinimas">
-      <input id="company-code" placeholder="Įmonės kodas">
-      <input id="vat-code" placeholder="PVM kodas (nebūtina)">
-    </div>
-    <p id="msg" class="note" hidden></p>
-    <p class="note">Atšaukti galite bet kada. Jokio 12 mėnesių įsipareigojimo.</p>
-  </div>
+  <p class="note">UMI PRO ir UMI VERSLAS dar kuriami. Prekiauti UMI ir dabar nieko
+  nekainuoja, ir tai nesikeis.</p>
+
 </main>
 
 <footer>
@@ -128,83 +114,45 @@
 </footer>
 
 <script type="module">
-// Buying PRO on the website rather than in the app is the whole point: Apple takes
-// 15-30% of a subscription sold inside an app and nothing of one sold here.
+// The plans are parked. This page exists so she can show what they will be, and
+// so anyone who wants one can say so - which is the thing worth learning while
+// they are not for sale. No payment happens here any more.
 import { createClient } from 'https://esm.sh/@supabase/supabase-js@2';
 
-const SUPABASE_URL = 'https://qtzsgjgryfnaayrnaadl.supabase.co';
-const SUPABASE_ANON = 'sb_publishable_HP_gRv0fRnEUAQSpSsRSaA_-XQAJUm3';
-const sb = createClient(SUPABASE_URL, SUPABASE_ANON);
+const sb = createClient(
+  'https://qtzsgjgryfnaayrnaadl.supabase.co',
+  'sb_publishable_HP_gRv0fRnEUAQSpSsRSaA_-XQAJUm3',
+);
 
 const $ = (id) => document.getElementById(id);
-const show = (el, on) => { el.hidden = !on; };
-
-let session = null;
-async function render() {
-  session = (await sb.auth.getSession()).data.session;
-  show($('signed-out'), false);
-  show($('signed-in'), !!session);
-  if (session) $('who').textContent = session.user.email;
-  // Back from the e-mail link: point at the plan she chose before signing in.
-  const plan = sessionStorage.getItem('umi-plan');
-  if (session && plan) {
-    sessionStorage.removeItem('umi-plan');
-    const b = document.querySelector(`button[data-plan="${plan}"]`);
-    if (b) { const p = b.closest('.plan'); p.classList.add('lit'); p.scrollIntoView({ behavior: 'smooth' }); }
-  }
-}
-
-// Magic link: the website has no password of its own, and the subscription has to
-// land on the same account the app uses.
-$('login-form').addEventListener('submit', async (e) => {
-  e.preventDefault();
-  const email = $('email').value.trim();
-  const { error } = await sb.auth.signInWithOtp({
-    email, options: { emailRedirectTo: window.location.href },
-  });
-  const msg = $('login-msg');
-  msg.textContent = error ? error.message : 'Patikrinkite paštą - nuoroda išsiųsta.';
-  show(msg, true);
-});
-
-document.querySelectorAll('input[name="kind"]').forEach((r) => {
-  r.addEventListener('change', () => {
-    show($('company-fields'), document.querySelector('input[name="kind"]:checked').value === 'company');
-  });
-});
+let plan = null;
 
 document.querySelectorAll('button[data-plan]').forEach((b) => {
-  b.addEventListener('click', async () => {
-    const msg = $('msg');
-    if (!session) {
-      // The tiers are readable by anyone; only buying needs the account.
-      sessionStorage.setItem('umi-plan', b.dataset.plan);
-      show($('signed-out'), true);
-      $('signed-out').scrollIntoView({ behavior: 'smooth' });
-      $('email').focus();
-      return;
-    }
-    b.disabled = true;
-    try {
-      const { data, error } = await sb.functions.invoke('subscribe', {
-        body: {
-          plan: b.dataset.plan,
-          sellerKind: document.querySelector('input[name="kind"]:checked').value,
-          companyName: $('company-name').value.trim() || null,
-          companyCode: $('company-code').value.trim() || null,
-          vatCode: $('vat-code').value.trim() || null,
-        },
-      });
-      if (error) throw error;
-      window.location.href = data.url;
-    } catch (err) {
-      msg.textContent = String(err.message || err);
-      show(msg, true);
-      b.disabled = false;
-    }
+  b.addEventListener('click', () => {
+    plan = b.dataset.plan;
+    $('ask-title').textContent =
+      plan === 'pro' ? 'Pranešime, kai atsiras UMI PRO' : 'Pranešime, kai atsiras UMI VERSLAS';
+    $('ask').hidden = false;
+    $('ask').scrollIntoView({ behavior: 'smooth' });
+    $('email').focus();
   });
 });
 
-sb.auth.onAuthStateChange(render);
-render();
+$('ask-form').addEventListener('submit', async (e) => {
+  e.preventDefault();
+  const msg = $('msg');
+  const email = $('email').value.trim();
+  if (!plan) return;
+  try {
+    const { error } = await sb.rpc('register_plan_interest', { email, plan });
+    if (error) throw error;
+    msg.textContent = 'Ačiū. Parašysime, kai bus galima užsisakyti.';
+    msg.className = 'note ok';
+    $('ask-form').hidden = true;
+  } catch (err) {
+    msg.textContent = String(err.message || err);
+    msg.className = 'note';
+  }
+  msg.hidden = false;
+});
 </script>
